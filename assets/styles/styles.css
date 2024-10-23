@@ -38,6 +38,21 @@ body {
   margin-left: auto;
 }
 
+#create-recipe .modal-content {
+  animation: fade_in_1 2s ease-out;
+}
+
+@keyframes fade_in_1 {
+  0%, 10% {
+    opacity: 0;
+    transform: translateY(8rem) scale(0);
+  }
+  30%, 100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 #main-wrapper {
   flex: 1 0 auto;
   display: flex;
