@@ -150,3 +150,44 @@ function render(fetchedRecipes) {
   addCardClickListener()
 }
 
+function addCardClickListener() {
+  const $searchedItems = $main.getElementsByClassName('found-item')
+
+  Array.from($searchedItems).forEach(item => {
+    const $favouriteButton = item.getElementsByClassName('btn-favourite')[0]
+
+    $favouriteButton.addEventListener('click', function() {
+      console.log(this.firstElementChild.classList)
+      this.firstElementChild.classList.contains('fa-regular')
+        ? this.firstElementChild.classList.replace('fa-regular', 'fa-solid')
+        : this.firstElementChild.classList.replace('fa-solid', 'fa-regular')
+
+      const recipeLabel = this.closest('.found-item').dataset.label
+      const favouriteIndex = currentFoundRecipes.findIndex(item => item.label === recipeLabel)
+      favouriteIndex > -1 && toggleFavouriteRecipe(favouriteIndex)
+    })
+  })
+}
+
+function toggleFavouriteRecipe(index) {
+  const favouriteList = JSON.parse(localStorage.getItem('favouriteRecipes'))
+
+  if (!favouriteList || !favouriteList.length) {
+    localStorage.setItem(
+      'favouriteRecipes',
+      JSON.stringify([currentFoundRecipes[index]])
+    )
+  } else {
+    const recipeIndexInFavouriteList =
+      favouriteList.findIndex(item => item.label === currentFoundRecipes[index].label)
+    const isRecipeInFavouriteList = recipeIndexInFavouriteList > -1
+
+    if (isRecipeInFavouriteList) {
+      favouriteList.splice(recipeIndexInFavouriteList, 1)
+      localStorage.setItem('favouriteRecipes', JSON.stringify(favouriteList))
+    } else {
+      favouriteList.push(currentFoundRecipes[index])
+      localStorage.setItem('favouriteRecipes', JSON.stringify(favouriteList))
+    }
+  }
+}
