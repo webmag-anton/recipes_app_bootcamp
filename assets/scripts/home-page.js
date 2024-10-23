@@ -93,7 +93,8 @@ function render(fetchedRecipes) {
       cautions = [],
       ingredientLines = [],
       totalTime = '',
-      totalWeight = ''
+      totalWeight = '',
+      url = ''
     } = {}} = item
 
     currentFoundRecipes.push({label, imageUrl})
@@ -104,6 +105,9 @@ function render(fetchedRecipes) {
           <img src='${imageUrl}' class='card-img-top' alt='${label}'>
           <div class='card-body'>
             <h5 class='card-title'>${label}</h5>
+            <button type='button' class='btn btn-warning btn-favourite ml-auto'>
+              <i class='${favouriteList?.findIndex(item => item.label === label) > -1 ? 'fa-solid' : 'fa-regular'} fa-star'></i>
+            </button>
             <ul class='list-group list-group-flush'>
               <li class='list-group-item'>
                 ${dishType.map(dish => `<span class='badge text-bg-dark d-inline-block mb-1'>${dish}</span>`).join('')}
@@ -120,7 +124,7 @@ function render(fetchedRecipes) {
               </li>
             </ul>
             
-            <div class='accordion mb-3' id='accordion_${ind}'>
+            <div class='accordion mt-2 mb-2' id='accordion_${ind}'>
               <div class='accordion-item'>
                 <h2 class='accordion-header'>
                   <button class='accordion-button' type='button' data-bs-toggle='collapse' data-bs-target='#collapse-${ind}' aria-expanded='true' aria-controls='collapse-${ind}'>
@@ -135,9 +139,7 @@ function render(fetchedRecipes) {
               </div>
             </div>
             
-            <button type='button' class='btn btn-warning btn-favourite'>
-              <i class='${favouriteList?.findIndex(item => item.label === label) > -1 ? 'fa-solid' : 'fa-regular'} fa-star'></i>
-            </button>
+            <a href='${url}' class='btn btn-dark recipe-link' target='_blank'>recipe <i class="fa-solid fa-link"></i></a>
           </div>
         </div>
       </div>
@@ -145,6 +147,6 @@ function render(fetchedRecipes) {
   })
   document.getElementById('found-recipes').innerHTML = template
 
-//   addCardClickListener()
+  addCardClickListener()
 }
 
