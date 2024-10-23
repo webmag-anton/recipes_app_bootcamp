@@ -5,12 +5,12 @@
   height: 8px;
 }
 *::-webkit-scrollbar-track {
-  background: grey;
+  background: #dedede;
 }
 *::-webkit-scrollbar-thumb {
-  background-color: #bfbfbf;
+  background-color: #c9c9c9;
   border-radius: 5px;
-  border: 2px solid #717171;
+  border: 2px solid #afafaf;
 }
 
 body {
@@ -24,6 +24,7 @@ body {
 }
 
 #header {
+  height: 242px;
   padding-top: 58px;
 }
 
@@ -45,15 +46,47 @@ body {
 }
 
 #sidebar {
+  position: sticky;
+  top: 58px;
   flex-basis: 360px;
+  height: calc(100vh - 58px);
+  min-height: 400px;
   padding: 16px;
   border-right: 1px solid #dee2e6;
   background-color: #f8f9fa;
+  overflow: auto;
 }
 
 #main {
   flex-basis: calc(100% - 360px);
   padding: 16px;
+}
+
+.found-item li {
+  padding-left: 0;
+}
+
+.found-item .badge {
+  margin-right: 5px;
+}
+
+.favourite-item.animated {
+  animation: disappear .65s ease-out;
+}
+
+@keyframes disappear {
+  0% {
+    transform: translateY(70px);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(-20px);
+    opacity: .5;
+  }
+  100% {
+    transform: translateY(-100px);
+    opacity: 0;
+  }
 }
 
 
