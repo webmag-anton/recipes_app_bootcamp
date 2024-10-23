@@ -38,96 +38,91 @@
       <form id='search-filter'>
         <button type='submit' class='btn btn-primary'>Search</button>
 
-<!--        <div class='form-group'>-->
-<!--          <label for='search-keywords'>keywords *</label>-->
-<!--          <input type='text' class='form-control' id='search-keywords' placeholder='Type one or more keywords (e.g. pizza)' required>-->
-<!--        </div>-->
-
-        <fieldset class='mb-5'>
+        <fieldset class='mb-4'>
           <legend>Keywords *</legend>
-          <input type='text' name='keywords' class='form-control' id='search-keywords' placeholder='Type one or more keywords (e.g. pizza)' required>
+          <input id='search-keywords' name='keywords' type='text' class='form-control' placeholder='Type one or more keywords (e.g. pizza)' required>
         </fieldset>
 
-        <fieldset class='mb-3'>
-          <legend>Allergies:</legend>
-<!--          <div class='form-group'>-->
-          <div class='form-check form-switch'>
-            <input class='form-check-input' type='checkbox' role='switch' id=''>
-            <label class='form-check-label' for=''>gluten-free</label>
-          </div>
-          <div class='form-check form-switch'>
-            <input class='form-check-input' type='checkbox' role='switch' id=''>
-            <label class='form-check-label' for=''>fish-free</label>
-          </div>
-          <div class='form-check form-switch'>
-            <input class='form-check-input' type='checkbox' role='switch' id=''>
-            <label class='form-check-label' for=''>egg-free</label>
-          </div>
-          <div class='form-check form-switch'>
-            <input class='form-check-input' type='checkbox' role='switch' id=''>
-            <label class='form-check-label' for=''>celery-free</label>
-          </div>
-          <div class='form-check form-switch'>
-            <input class='form-check-input' type='checkbox' role='switch' id=''>
-            <label class='form-check-label' for=''>crustacean-free</label>
-          </div>
-          <div class='form-check form-switch'>
-            <input class='form-check-input' type='checkbox' role='switch' id=''>
-            <label class='form-check-label' for=''>dairy-free</label>
-          </div>
-          <div class='form-check form-switch'>
-            <input class='form-check-input' type='checkbox' role='switch' id=''>
-            <label class='form-check-label' for=''>peanut-free</label>
-          </div>
-<!--          </div>-->
-        </fieldset>
-
-        <fieldset class='mb-3'>
+        <fieldset class='mb-4'>
           <legend>Diets:</legend>
-<!--          <div class='form-group'>-->
-            <div class='form-check form-switch'>
-              <input class='form-check-input' type='checkbox' role='switch' id=''>
-              <label class='form-check-label' for=''>low-fat</label>
-            </div>
-            <div class='form-check form-switch'>
-              <input class='form-check-input' type='checkbox' role='switch' id=''>
-              <label class='form-check-label' for=''>keto</label>
-            </div>
-            <div class='form-check form-switch'>
-              <input class='form-check-input' type='checkbox' role='switch' id=''>
-              <label class='form-check-label' for=''>alcohol-free</label>
-            </div>
-            <div class='form-check form-switch'>
-              <input class='form-check-input' type='checkbox' role='switch' id=''>
-              <label class='form-check-label' for=''>balanced</label>
-            </div>
-            <div class='form-check form-switch'>
-              <input class='form-check-input' type='checkbox' role='switch' id=''>
-              <label class='form-check-label' for=''>high-Fiber</label>
-            </div>
-            <div class='form-check form-switch'>
-              <input class='form-check-input' type='checkbox' role='switch' id=''>
-              <label class='form-check-label' for=''>no-sugar</label>
-            </div>
-            <div class='form-check form-switch'>
-              <input class='form-check-input' type='checkbox' role='switch' id=''>
-              <label class='form-check-label' for=''>red meat-free</label>
-            </div>
-            <div class='form-check form-switch'>
-              <input class='form-check-input' type='checkbox' role='switch' id=''>
-              <label class='form-check-label' for=''>vegan</label>
-            </div>
-<!--          </div>-->
+          <div class='form-check form-switch'>
+            <input id='low-fat' name='low-fat' class='form-check-input' type='checkbox' role='switch' data-search-type='diet'>
+            <label class='form-check-label' for='low-fat'>low-fat</label>
+          </div>
+          <div class='form-check form-switch'>
+            <input id='keto-friendly' name='keto-friendly' class='form-check-input' type='checkbox' role='switch' data-search-type='health'>
+            <label class='form-check-label' for='keto-friendly'>keto-friendly</label>
+          </div>
+          <div class='form-check form-switch'>
+            <input id='alcohol-free' name='alcohol-free' class='form-check-input' type='checkbox' role='switch' data-search-type='health'>
+            <label class='form-check-label' for='alcohol-free'>alcohol-free</label>
+          </div>
+          <div class='form-check form-switch'>
+            <input id='balanced' name='balanced' class='form-check-input' type='checkbox' role='switch' data-search-type='diet'>
+            <label class='form-check-label' for='balanced'>balanced</label>
+          </div>
+          <div class='form-check form-switch'>
+            <input id='high-fiber' name='high-fiber' class='form-check-input' type='checkbox' role='switch' data-search-type='diet'>
+            <label class='form-check-label' for='high-fiber'>high-fiber</label>
+          </div>
+          <div class='form-check form-switch'>
+            <input id='low-sugar' name='low-sugar' class='form-check-input' type='checkbox' role='switch' data-search-type='health'>
+            <label class='form-check-label' for='low-sugar'>low-sugar</label>
+          </div>
+          <div class='form-check form-switch'>
+            <input id='red-meat-free' name='red-meat-free' class='form-check-input' type='checkbox' role='switch' data-search-type='health'>
+            <label class='form-check-label' for='red-meat-free'>red-meat-free</label>
+          </div>
+          <div class='form-check form-switch'>
+            <input id='vegan' name='vegan' class='form-check-input' type='checkbox' role='switch' data-search-type='health'>
+            <label class='form-check-label' for='vegan'>vegan</label>
+          </div>
+        </fieldset>
+
+        <fieldset class='mb-4'>
+          <legend>Allergies:</legend>
+          <div class='form-check form-switch'>
+            <input id='gluten-free' name='gluten-free' class='form-check-input' type='checkbox' role='switch' data-search-type='health'>
+            <label class='form-check-label' for='gluten-free'>gluten-free</label>
+          </div>
+          <div class='form-check form-switch'>
+            <input id='fish-free' name='fish-free' class='form-check-input' type='checkbox' role='switch' data-search-type='health'>
+            <label class='form-check-label' for='fish-free'>fish-free</label>
+          </div>
+          <div class='form-check form-switch'>
+            <input id='egg-free' name='egg-free' class='form-check-input' type='checkbox' role='switch' data-search-type='health'>
+            <label class='form-check-label' for='egg-free'>egg-free</label>
+          </div>
+          <div class='form-check form-switch'>
+            <input id='celery-free' name='celery-free' class='form-check-input' type='checkbox' role='switch' data-search-type='health'>
+            <label class='form-check-label' for='celery-free'>celery-free</label>
+          </div>
+          <div class='form-check form-switch'>
+            <input id='crustacean-free' name='crustacean-free' class='form-check-input' type='checkbox' role='switch' data-search-type='health'>
+            <label class='form-check-label' for='crustacean-free'>crustacean-free</label>
+          </div>
+          <div class='form-check form-switch'>
+            <input id='dairy-free' name='dairy-free' class='form-check-input' type='checkbox' role='switch' data-search-type='health'>
+            <label class='form-check-label' for='dairy-free'>dairy-free</label>
+          </div>
+          <div class='form-check form-switch'>
+            <input id='peanut-free' name='peanut-free' class='form-check-input' type='checkbox' role='switch' data-search-type='health'>
+            <label class='form-check-label' for='peanut-free'>peanut-free</label>
+          </div>
         </fieldset>
 
         <fieldset>
-          <legend>Calories:</legend>
-          <input type='number' min='1'>
+          <legend>Kcal per serving:</legend>
+          <label for='calories-min'>min</label>
+          <input name='kcal-min' type='number' min='0' max='10000' id='calories-min'>
+          <label for='calories-max'>max</label>
+          <input name='kcal-max' type='number' min='0' max='10000' id='calories-max'>
+        </fieldset>
       </form>
     </aside>
 
     <main id='main'>
-      <div id='found-recipes' class='row row-cols-1 row-cols-md-3 row-cols-lg-5 g-3'></div>
+      <div id='found-recipes' class='row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3'></div>
     </main>
   </div>
 
