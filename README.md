@@ -6,8 +6,10 @@
 -__Navigation Bar__
 - Featured on every page, the navigation bar includes links to the logo, home page, favourites page and the create recipe page. The navigation bar is the same for all pages to make navigating the website as easy as possible.
 -__Landing Page Image__
+
 - The landing includes image with animated text overlay to allow the user to see what is this site about.
 -__Recipe Search Bar__
+
 - The Recipe Search bar allows the user to input data such as calories, diet types, allergies and keywords and then search for recipes based on the data they have put into the search bar.
 -__Footer__
 - The footer contains relevant social media links and icons.
