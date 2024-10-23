@@ -51,7 +51,7 @@ body {
   flex-basis: 360px;
   height: calc(100vh - 58px);
   min-height: 400px;
-  padding: 16px;
+  padding: 16px 16px 32px;
   border-right: 1px solid #dee2e6;
   background-color: #f8f9fa;
   overflow: auto;
@@ -68,6 +68,23 @@ body {
 
 .found-item .badge {
   margin-right: 5px;
+}
+
+.btn-favourite {
+  display: block;
+  margin-left: auto;
+}
+
+.recipe-link {
+  display: block;
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: #e2e2e2 !important;
+}
+
+.accordion-body {
+  font-size: 14px;
 }
 
 .favourite-item.animated {
@@ -88,6 +105,5 @@ body {
     opacity: 0;
   }
 }
-
 
 
