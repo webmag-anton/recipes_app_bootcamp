@@ -4,17 +4,17 @@
 ## Features
 # Existing Features
  __Navigation Bar__ <br/>
-- Featured on every page, the navigation bar includes links to the logo, home page, favourites page and the create recipe page. The navigation bar is the same for all pages to make navigating the website as easy as possible.<br/>
+- Featured on every page, the navigation bar includes links to the logo, home page, favourites page and the create recipe page. The navigation bar is the same for all pages to make navigating the website as easy as possible.<br/><br/>
  __Landing Page Image__ <br/>
-- The landing includes image with animated text overlay to allow the user to see what is this site about.<br/>
+- The landing includes image with animated text overlay to allow the user to see what is this site about.<br/><br/>
  __Recipe Search Bar__ <br/>
-- The Recipe Search bar allows the user to input data such as calories, diet types, allergies and keywords and then search for recipes based on the data they have put into the search bar.<br/>
+- The Recipe Search bar allows the user to input data such as calories, diet types, allergies and keywords and then search for recipes based on the data they have put into the search bar.<br/><br/>
  __Footer__ <br/>
-- The footer contains relevant social media links and icons.<br/>
+- The footer contains relevant social media links and icons.<br/><br/>
  __Favourites Page__ <br/>
-- This page displays a list of all our favourite recipes.<br/>
+- This page displays a list of all our favourite recipes.<br/><br/>
  __Create Page__ <br/>
-- This page allows us to create our own recipes.
+- This page allows us to create our own recipes.<br/>
 
 ## Projectboard Link
 [link](https://github.com/users/webmag-anton/projects/3)
