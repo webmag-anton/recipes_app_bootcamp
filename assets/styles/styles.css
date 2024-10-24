@@ -26,6 +26,7 @@ body {
 #header {
   height: 242px;
   padding-top: 86px;
+  background: url(../images/background.webp) no-repeat center center/cover;
 }
 
 #navbar {
