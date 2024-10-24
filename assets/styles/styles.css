@@ -29,6 +29,10 @@ body {
   background: url(../images/background.webp) no-repeat center center/cover;
 }
 
+#header.favorite {
+  background: url(../images/background-fav.webp) no-repeat center right/cover;
+}
+
 #navbar {
   padding: 8px;
   background-color: rgba(0, 0, 0, .75);
