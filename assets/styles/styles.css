@@ -28,7 +28,12 @@ body {
 
 #header {
   height: 242px;
-  padding-top: 58px;
+  padding-top: 86px;
+  background: url(../images/background.webp) no-repeat center center/cover;
+}
+
+#header.favorite {
+  background: url(../images/background-fav.webp) no-repeat center right/cover;
 }
 
 .navbar-nav .nav-link {
@@ -55,6 +60,21 @@ body {
   margin-left: auto;
 }
 
+#create-recipe .modal-content {
+  animation: fade_in_1 2s ease-out;
+}
+
+@keyframes fade_in_1 {
+  0%, 10% {
+    opacity: 0;
+    transform: translateY(8rem) scale(0);
+  }
+  30%, 100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 #main-wrapper {
   flex: 1 0 auto;
   display: flex;
@@ -64,7 +84,7 @@ body {
 
 #sidebar {
   position: sticky;
-  top: 58px;
+  top: 86px;
   flex-basis: 360px;
   min-width: 360px;
   height: calc(100vh - 58px);

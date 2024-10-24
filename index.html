@@ -1,35 +1,187 @@
 <!doctype html>
 <html lang='en'>
+
 <head>
   <meta charset='UTF-8'>
   <meta name='viewport'
-        content='width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0'>
+    content='width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0'>
   <meta http-equiv='X-UA-Compatible' content='ie=edge'>
-  <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH' crossorigin='anonymous'>
-  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css' integrity='sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==' crossorigin='anonymous' referrerpolicy='no-referrer' />
+  <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css' rel='stylesheet'
+    integrity='sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH' crossorigin='anonymous'>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css'
+    integrity='sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=='
+    crossorigin='anonymous' referrerpolicy='no-referrer' />
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
   <link rel='stylesheet' href='assets/styles/styles.css'>
   <title>Recipes Searcher</title>
 </head>
 
 <body>
   <header id='header'>
-    <nav id='navbar' class='navbar navbar-expand-lg navbar-dark fixed-top'>
-      <a class='navbar-brand' href='index.html'>
-        <img id='app-logo' src='' alt='app-logo'>
+    <nav id='navbar' class='navbar navbar-expand-sm navbar-dark fixed-top'>
+      <a class='navbar-brand p-0 ms-2' href='index.html'>
+        <img id='app-logo' src='assets/images/logo.png' alt='app-logo'>
       </a>
-      <button class='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarNavAltMarkup' aria-controls='navbarNavAltMarkup' aria-expanded='false' aria-label='Toggle navigation'>
+      <button class='navbar-toggler' type='button' data-bs-toggle='collapse' data-bs-target='#navbarNavAltMarkup'
+        aria-controls='navbarNavAltMarkup' aria-expanded='false' aria-label='Toggle navigation'>
         <span class='navbar-toggler-icon'></span>
       </button>
-      <div class='collapse navbar-collapse' id='navbarNavAltMarkup'>
+      <div class='collapse navbar-collapse text-center' id='navbarNavAltMarkup'>
         <div class='navbar-nav ml-auto'>
           <a class='nav-link active' href='index.html'>Home</a>
           <a class='nav-link' href='favourites.html'>Favourites <i class='fa-solid fa-star'></i></a>
         </div>
-        <button id='create' type='button' class='btn btn-success' data-toggle='modal' data-target='#'>Create</button>
+        <button id='create' type='button' class='btn btn-success' data-bs-toggle='modal'
+          data-bs-target='#create-recipe'>Create Recipe</button>
       </div>
     </nav>
-    header
+
   </header>
+
+  <!--Modal-->
+  <div class="modal modal-lg" tabindex="-1" id="create-recipe">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <form>
+          <div class="modal-header">
+            <h5 class="modal-title">Create your recipe:</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-12 col-sm-8">
+                <div class="row">
+                  <div class="col">
+                    <div class="mb-3">
+                      <label for="recipe-name" class="form-label">Name</label>
+                      <input type="text" class="form-control" id="recipe-name" placeholder="Recipe name" required>
+                    </div>
+                    <div class="mb-3">
+                      <label for="ingredients" class="form-label">Ingredients:</label>
+                      <textarea class="form-control" id="ingredients" rows="7" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                      <label for="instructions" class="form-label">Instructions:</label>
+                      <textarea class="form-control" id="instructions" rows="10" required></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-sm-4">
+                <div class="row">
+                  <div class="col-6 col-sm-12">
+                    <fieldset class='mb-4'>
+                      <legend>Allergies:</legend>
+                      <div class='form-check form-switch'>
+                        <input id='gluten-free' name='gluten-free' class='form-check-input' type='checkbox'
+                          role='switch' data-search-type='health'>
+                        <label class='form-check-label' for='gluten-free'>gluten-free</label>
+                      </div>
+                      <div class='form-check form-switch'>
+                        <input id='fish-free' name='fish-free' class='form-check-input' type='checkbox' role='switch'
+                          data-search-type='health'>
+                        <label class='form-check-label' for='fish-free'>fish-free</label>
+                      </div>
+                      <div class='form-check form-switch'>
+                        <input id='egg-free' name='egg-free' class='form-check-input' type='checkbox' role='switch'
+                          data-search-type='health'>
+                        <label class='form-check-label' for='egg-free'>egg-free</label>
+                      </div>
+                      <div class='form-check form-switch'>
+                        <input id='celery-free' name='celery-free' class='form-check-input' type='checkbox'
+                          role='switch' data-search-type='health'>
+                        <label class='form-check-label' for='celery-free'>celery-free</label>
+                      </div>
+                      <div class='form-check form-switch'>
+                        <input id='crustacean-free' name='crustacean-free' class='form-check-input' type='checkbox'
+                          role='switch' data-search-type='health'>
+                        <label class='form-check-label' for='crustacean-free'>crustacean-free</label>
+                      </div>
+                      <div class='form-check form-switch'>
+                        <input id='dairy-free' name='dairy-free' class='form-check-input' type='checkbox' role='switch'
+                          data-search-type='health'>
+                        <label class='form-check-label' for='dairy-free'>dairy-free</label>
+                      </div>
+                      <div class='form-check form-switch'>
+                        <input id='peanut-free' name='peanut-free' class='form-check-input' type='checkbox'
+                          role='switch' data-search-type='health'>
+                        <label class='form-check-label' for='peanut-free'>peanut-free</label>
+                      </div>
+                    </fieldset>
+                  </div>
+
+                  <div class="col-6 col-sm-12">
+                    <fieldset class='mb-4'>
+                      <legend>Diets:</legend>
+                      <div class='form-check form-switch'>
+                        <input id='low-fat' name='low-fat' class='form-check-input' type='checkbox' role='switch'
+                          data-search-type='diet'>
+                        <label class='form-check-label' for='low-fat'>low-fat</label>
+                      </div>
+                      <div class='form-check form-switch'>
+                        <input id='keto-friendly' name='keto-friendly' class='form-check-input' type='checkbox'
+                          role='switch' data-search-type='health'>
+                        <label class='form-check-label' for='keto-friendly'>keto-friendly</label>
+                      </div>
+                      <div class='form-check form-switch'>
+                        <input id='alcohol-free' name='alcohol-free' class='form-check-input' type='checkbox'
+                          role='switch' data-search-type='health'>
+                        <label class='form-check-label' for='alcohol-free'>alcohol-free</label>
+                      </div>
+                      <div class='form-check form-switch'>
+                        <input id='balanced' name='balanced' class='form-check-input' type='checkbox' role='switch'
+                          data-search-type='diet'>
+                        <label class='form-check-label' for='balanced'>balanced</label>
+                      </div>
+                      <div class='form-check form-switch'>
+                        <input id='high-fiber' name='high-fiber' class='form-check-input' type='checkbox' role='switch'
+                          data-search-type='diet'>
+                        <label class='form-check-label' for='high-fiber'>high-fiber</label>
+                      </div>
+                      <div class='form-check form-switch'>
+                        <input id='low-sugar' name='low-sugar' class='form-check-input' type='checkbox' role='switch'
+                          data-search-type='health'>
+                        <label class='form-check-label' for='low-sugar'>low-sugar</label>
+                      </div>
+                      <div class='form-check form-switch'>
+                        <input id='red-meat-free' name='red-meat-free' class='form-check-input' type='checkbox'
+                          role='switch' data-search-type='health'>
+                        <label class='form-check-label' for='red-meat-free'>red-meat-free</label>
+                      </div>
+                      <div class='form-check form-switch'>
+                        <input id='vegan' name='vegan' class='form-check-input' type='checkbox' role='switch'
+                          data-search-type='health'>
+                        <label class='form-check-label' for='vegan'>vegan</label>
+                      </div>
+                    </fieldset>
+                  </div>
+                  <div class="col-12">
+                    <fieldset>
+                      <legend>Kcal per serving:</legend>
+                      <div class="row">
+                        <div class="col mb-sm-3 d-flex justify-content-around">
+                          <label for='calories-min'>min</label>
+                          <input class="ml-auto" name='kcal-min' type='number' min='0' max='10000' id='calories-min'>
+                        </div>
+                        <div class="col mb-sm-3 d-flex justify-content-around">
+                          <label for='calories-max'>max</label>
+                          <input class="ml-auto" name='kcal-max' type='number' min='0' max='10000' id='calories-max'>
+                        </div>
+                      </div>
+                    </fieldset>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer justify-content-center">
+            <button type="button" class="btn btn-primary">Create</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!--End of Modal-->
 
   <div id='main-wrapper'>
     <aside id='sidebar'>
@@ -38,7 +190,8 @@
       <form id='search-filter'>
         <fieldset class='mb-5'>
           <legend>Keywords *</legend>
-          <input id='search-keywords' name='keywords' type='text' class='form-control' placeholder='Type one or more keywords (e.g. pizza)' required>
+          <input id='search-keywords' name='keywords' type='text' class='form-control'
+            placeholder='Type one or more keywords (e.g. pizza)' required>
         </fieldset>
 
         <div class='filter-wrapper mb-2'>
@@ -133,8 +286,13 @@
     footer
   </footer>
 
-  <script src='https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js' integrity='sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r' crossorigin='anonymous'></script>
-  <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js' integrity='sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy' crossorigin='anonymous'></script>
+  <script src='https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js'
+    integrity='sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r'
+    crossorigin='anonymous'></script>
+  <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js'
+    integrity='sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy'
+    crossorigin='anonymous'></script>
   <script src='assets/scripts/home-page.js'></script>
 </body>
+
 </html>
