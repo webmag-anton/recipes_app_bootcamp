@@ -50,4 +50,3 @@ The live link can be found here - https://webmag-anton.github.io/cyber_security_
 ### Content 
 
 - The icons in the footer were taken from [Font Awesome](https://fontawesome.com/)
-- The favicons were customn made by Oleksii
