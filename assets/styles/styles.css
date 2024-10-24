@@ -12,6 +12,9 @@
   border-radius: 5px;
   border: 2px solid #afafaf;
 }
+::placeholder {
+  color: #b6b6b6 !important;
+}
 
 body {
   display: flex;
@@ -31,6 +34,20 @@ body {
 
 #header.favorite {
   background: url(../images/background-fav.webp) no-repeat center right/cover;
+}
+
+.navbar-nav .nav-link {
+  color: #eee;
+  margin-right: 15px;
+}
+.navbar-nav .nav-link:hover {
+  color: #fff;
+}
+.navbar-nav .nav-link.active{
+  color: #ff6f7d;
+}
+.navbar-nav .nav-link.active:hover {
+  color: #ff3b4f;
 }
 
 #navbar {
@@ -69,17 +86,76 @@ body {
   position: sticky;
   top: 86px;
   flex-basis: 360px;
+  min-width: 360px;
   height: calc(100vh - 58px);
   min-height: 400px;
-  padding: 16px 16px 32px;
+  padding: 16px 16px 28px;
   border-right: 1px solid #dee2e6;
   background-color: #f8f9fa;
   overflow: auto;
 }
 
+.form-switch input,
+.form-switch label {
+  cursor: pointer;
+}
+
+.form-check-input:checked {
+  background-color: #20a768;
+  border-color: #1e9339;
+}
+
+.form-check-input:focus {
+  border-color: #abfe86;
+  box-shadow: 0 0 0 .25rem #0dfd7040;
+}
+
+#search-btn {
+  display: block;
+  width: 100%;
+}
+
+.filter-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
 #main {
+  position: relative;
   flex-basis: calc(100% - 360px);
   padding: 16px;
+}
+
+.spinner-border {
+  position: absolute;
+  left: calc(48% - 25px);
+  width: 50px;
+  height: 50px;
+  margin-top: 70px;
+  z-index: 1;
+}
+
+.card {
+  position: relative;
+}
+
+.card::before {
+  position: absolute;
+  content: '';
+  width: 100%;
+  padding-top: 100%;
+  background-color: lightgrey;
+  background-image: url('img-placeholder.jpg');
+  background-size: contain;
+}
+
+.card-img-top {
+  position: absolute;
+  z-index: 1;
+}
+
+.card-body {
+  padding-top: calc(100% + 16px);
 }
 
 .found-item li {
@@ -90,7 +166,8 @@ body {
   margin-right: 5px;
 }
 
-.btn-favourite {
+.btn-favourite,
+.favourite-delete-btn {
   display: block;
   margin-left: auto;
 }
@@ -127,3 +204,34 @@ body {
 }
 
 
+@media screen and (max-width: 940px) {
+  #main-wrapper {
+    flex-direction: column;
+  }
+  #sidebar {
+    position: static;
+    flex-basis: auto;
+    height: auto;
+    min-height: 0;
+    min-width: initial;
+  }
+  #search-filter {
+    display: flex;
+    flex-direction: column;
+  }
+  .filter-wrapper {
+    justify-content: space-around;
+  }
+  .calories-fieldset {
+    text-align: center;
+  }
+}
+@media screen and (max-width: 400px) {
+  .filter-wrapper {
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  .calories-fieldset {
+    text-align: left;
+  }
+}

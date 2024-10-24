@@ -3,14 +3,17 @@ const appKey = 'dc83d53eaf6e9bcde3a249be9b9d6ce7'
 
 let $searchFilter = undefined
 let $main = undefined
+let $recipes = undefined
 let currentFoundRecipes = []
+let $nothingFoundAlert = undefined
 
 document.addEventListener('DOMContentLoaded', () => {
   $searchFilter = document.getElementById('search-filter')
   $main = document.getElementById('main')
+  $recipes = $main.querySelector('#found-recipes')
 
-  if (sessionStorage.getItem('favouriteRecipes')) {
-    render(JSON.parse(sessionStorage.getItem('favouriteRecipes')))
+  if (sessionStorage.getItem('foundRecipes')) {
+    render(JSON.parse(sessionStorage.getItem('foundRecipes')))
   }
 
   $searchFilter.addEventListener('submit', async function(event) {
@@ -55,19 +58,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const requestUrl = `${url}${params}`
     const fetchedRecipes = await fetchData(requestUrl)
-    render(fetchedRecipes)
 
-    sessionStorage.setItem('favouriteRecipes', JSON.stringify(fetchedRecipes))
+    if (!fetchedRecipes?.hits?.length) {
+      !$nothingFoundAlert && renderNotFound()
+    } else {
+      if ($nothingFoundAlert) {
+        $nothingFoundAlert.remove()
+        $nothingFoundAlert = undefined
+      }
+      render(fetchedRecipes)
+    }
+
+    sessionStorage.setItem('foundRecipes', JSON.stringify(fetchedRecipes))
   })
 })
 
-
 async function fetchData(url) {
+  const $recipesContainer = $main.querySelector('#found-recipes')
+  $main.insertAdjacentHTML('afterbegin', `
+      <div class='spinner-border' role='status'>
+        <span class='visually-hidden'>Loading...</span>
+      </div>
+    `)
+  $recipesContainer.classList.add('invisible')
+
   try {
-    let response = await fetch(url)
+    const response = await fetch(url)
     if (response.ok) {
       let json = await response.json()
-      console.log(json)
       return json
     } else {
       console.error(`http error: status ${response.status}`)
@@ -76,11 +94,15 @@ async function fetchData(url) {
   catch(err) {
     console.error(`request error`)
   }
+  finally {
+    $main.querySelector('.spinner-border').remove()
+    $recipesContainer.classList.remove('invisible')
+  }
 }
 
 function render(fetchedRecipes) {
   let template = ''
-  const {hits: recipes = []} = fetchedRecipes
+  const { hits: recipes = [] } = fetchedRecipes
 
   const favouriteList = JSON.parse(localStorage.getItem('favouriteRecipes'))
 
@@ -97,7 +119,17 @@ function render(fetchedRecipes) {
       url = ''
     } = {}} = item
 
-    currentFoundRecipes.push({label, imageUrl})
+    currentFoundRecipes.push({
+      label,
+      imageUrl,
+      cuisineType,
+      dishType,
+      cautions,
+      ingredientLines,
+      totalTime,
+      totalWeight,
+      url
+    })
 
     template += `      
       <div class='col'>
@@ -190,4 +222,16 @@ function toggleFavouriteRecipe(index) {
       localStorage.setItem('favouriteRecipes', JSON.stringify(favouriteList))
     }
   }
+}
+
+function renderNotFound() {
+  $main.insertAdjacentHTML('beforeend', `
+    <div class='alert alert-warning nothing-found-alert' role='alert'>
+      No recipes found =( <br>
+      Try to modify your filter settings! 😃
+    </div>
+  `)
+  currentFoundRecipes = []
+  $recipes.innerHTML = ''
+  $nothingFoundAlert = $main.querySelector('.nothing-found-alert')
 }

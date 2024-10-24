@@ -25,17 +25,60 @@ function render($container, favouriteList) {
 
 function getRecipesTemplate(favouriteList) {
   let template = ''
-  favouriteList.forEach(({label, imageUrl}) => {
-    template += `      
+  favouriteList.forEach((item, ind) => {
+    const {
+      label,
+      imageUrl,
+      cuisineType,
+      dishType,
+      cautions,
+      ingredientLines,
+      totalTime,
+      totalWeight,
+      url
+    } = item
+
+    template += `
         <div class='col'>
-          <div class='card favourite-item' data-label='${label}'>
+          <div class='card found-item favourite-item' data-label='${label}'>
             <img src='${imageUrl}' class='card-img-top' alt='${label}'>
             <div class='card-body'>
               <h5 class='card-title'>${label}</h5>
-              <p class='card-text'>This content is a little bit longer.</p>
               <button type='button' class='btn btn-danger favourite-delete-btn'>
                 <i class='fa-solid fa-xmark'></i>
               </button>
+              <ul class='list-group list-group-flush'>
+                <li class='list-group-item'>
+                  ${dishType.map(dish => `<span class='badge text-bg-dark d-inline-block mb-1'>${dish}</span>`).join('')}
+                  ${cuisineType.map(cuisine => `<span class='badge text-bg-success d-inline-block mb-1'>${cuisine}</span>`).join('')}
+                </li>
+                <li class='list-group-item'>
+                  <span class='badge text-bg-secondary'>cooking time: ${totalTime} min</span>
+                </li>
+                <li class='list-group-item'>
+                  <span class='badge text-bg-secondary'>total weight: ${Math.round(totalWeight)} g</span>
+                </li>
+                <li class='list-group-item'>
+                  ${cautions.map(caution => `<span class='badge text-bg-danger d-inline-block'>${caution}</span>`).join('')}
+                </li>
+              </ul>
+              
+              <div class='accordion mt-2 mb-2' id='accordion_${ind}'>
+                <div class='accordion-item'>
+                  <h2 class='accordion-header'>
+                    <button class='accordion-button' type='button' data-bs-toggle='collapse' data-bs-target='#collapse-${ind}' aria-expanded='true' aria-controls='collapse-${ind}'>
+                      Ingredient:
+                    </button>
+                  </h2>
+                  <div id='collapse-${ind}' class='accordion-collapse collapse' data-bs-parent='#accordion_${ind}'>
+                    <div class='accordion-body'>
+                      ${ingredientLines.map(ingredient => `<p class='mb-1'>- ${ingredient}</p>`).join('')}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <a href='${url}' class='btn btn-dark recipe-link' target='_blank'>recipe <i class="fa-solid fa-link"></i></a>
             </div>
           </div>
         </div>
