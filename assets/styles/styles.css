@@ -61,7 +61,7 @@ body {
 }
 
 #create-recipe .modal-content {
-  animation: fade_in_1 2s ease-out;
+  animation: fade_in_1 1s ease-out;
 }
 
 @keyframes fade_in_1 {
@@ -78,8 +78,10 @@ body {
 #main-wrapper {
   flex: 1 0 auto;
   display: flex;
-  border-top: 1px solid #dee2e6;
-  border-bottom: 1px solid #dee2e6;
+}
+
+#main {
+  flex: 1 0 auto;
 }
 
 #sidebar {
@@ -145,7 +147,7 @@ body {
   width: 100%;
   padding-top: 100%;
   background-color: lightgrey;
-  background-image: url('img-placeholder.jpg');
+  background-image: url('../images/img-placeholder.jpg');
   background-size: contain;
 }
 
@@ -188,6 +190,10 @@ body {
   animation: disappear .65s ease-out;
 }
 
+.footer {
+  padding-top: 20px !important;
+}
+
 @keyframes disappear {
   0% {
     transform: translateY(70px);
@@ -224,6 +230,12 @@ body {
   }
   .calories-fieldset {
     text-align: center;
+  }
+}
+@media screen and (max-width: 575px) {
+  #create {
+    margin-top: 10px; 
+    margin-bottom: 10px;  
   }
 }
 @media screen and (max-width: 400px) {
