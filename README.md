@@ -1,3 +1,4 @@
+![Our Recipe App Responsive Mockup](https://github.com/webmag-anton/recipes_app_bootcamp/blob/main/assets/images/responsive-mockup.png)
 # Recipe Generator
 - The recipe generator is a web application which allows users to generate recipes on demand.
 
