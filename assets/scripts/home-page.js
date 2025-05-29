@@ -1,5 +1,7 @@
-const appID = '3084784d'
-const appKey = 'dc83d53eaf6e9bcde3a249be9b9d6ce7'
+const CONFIG = {
+  appID: '3084784d',
+  appKey: 'dc83d53eaf6e9bcde3a249be9b9d6ce7'
+}
 
 let $searchFilter = undefined
 let $main = undefined
@@ -22,8 +24,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const url = new URL(`https://api.edamam.com/api/recipes/v2?`)
     let params = new URLSearchParams(url.search)
     params.append('type', 'public')
-    params.append('app_id', appID)
-    params.append('app_key', appKey)
+    params.append('app_id', CONFIG.appID)
+    params.append('app_key', CONFIG.appKey)
 
     const $searchControls = this.getElementsByTagName('input')
 
