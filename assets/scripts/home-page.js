@@ -1,6 +1,9 @@
 const CONFIG = {
+  recipesAPI: 'https://api.edamam.com/api/recipes/v2?',
   appID: '3084784d',
-  appKey: 'dc83d53eaf6e9bcde3a249be9b9d6ce7'
+  appKey: 'dc83d53eaf6e9bcde3a249be9b9d6ce7',
+  foundRecipesKey: 'foundRecipes',
+  favouriteRecipesKey: 'favouriteRecipes'
 }
 
 let $searchFilter = undefined
@@ -14,66 +17,72 @@ document.addEventListener('DOMContentLoaded', () => {
   $main = document.getElementById('main')
   $recipes = $main.querySelector('#found-recipes')
 
-  if (sessionStorage.getItem('foundRecipes')) {
-    render(JSON.parse(sessionStorage.getItem('foundRecipes')))
+  renderPreviousSearchResults()
+
+  $searchFilter.addEventListener('submit', searchSubmitHandler)
+})
+
+function renderPreviousSearchResults() {
+  if (sessionStorage.getItem(CONFIG.foundRecipesKey)) {
+    render(JSON.parse(sessionStorage.getItem(CONFIG.foundRecipesKey)))
+  }
+}
+
+async function searchSubmitHandler(event) {
+  event.preventDefault()
+
+  const url = new URL(CONFIG.recipesAPI)
+  let params = new URLSearchParams(url.search)
+  params.append('type', 'public')
+  params.append('app_id', CONFIG.appID)
+  params.append('app_key', CONFIG.appKey)
+
+  const $searchControls = this.getElementsByTagName('input')
+
+  Array.from($searchControls).forEach(item => {
+    if (item.type === 'text') {
+      params.append('q', item.value.trim())
+    } else if (item.type === 'checkbox' && item.checked) {
+      switch (item.dataset.searchType) {
+        case 'diet':
+          params.append('diet', item.name)
+          break
+        case 'health':
+          params.append('health', item.name)
+      }
+    }
+  })
+
+  let kcalMinVal = $searchControls['kcal-min'].value
+  let kcalMaxVal = $searchControls['kcal-max'].value
+
+  if (kcalMinVal && !kcalMaxVal) {
+    params.append('calories', `${kcalMinVal}+`)
+  } else if (kcalMinVal && kcalMaxVal) {
+    if (+kcalMaxVal <= +kcalMinVal) {
+      kcalMaxVal = +kcalMinVal + 100
+      $searchControls['kcal-max'].value = kcalMaxVal
+    }
+    params.append('calories', `${kcalMinVal}-${kcalMaxVal}`)
+  } else if (!kcalMinVal && kcalMaxVal) {
+    params.append('calories', `${kcalMaxVal}`)
   }
 
-  $searchFilter.addEventListener('submit', async function(event) {
-    event.preventDefault()
+  const requestUrl = `${url}${params}`
+  const fetchedRecipes = await fetchData(requestUrl)
 
-    const url = new URL(`https://api.edamam.com/api/recipes/v2?`)
-    let params = new URLSearchParams(url.search)
-    params.append('type', 'public')
-    params.append('app_id', CONFIG.appID)
-    params.append('app_key', CONFIG.appKey)
-
-    const $searchControls = this.getElementsByTagName('input')
-
-    Array.from($searchControls).forEach(item => {
-      if (item.type === 'text') {
-        params.append('q', item.value.trim())
-      } else if (item.type === 'checkbox' && item.checked) {
-        switch (item.dataset.searchType) {
-          case 'diet':
-            params.append('diet', item.name)
-            break
-          case 'health':
-            params.append('health', item.name)
-        }
-      }
-    })
-
-    let kcalMinVal = $searchControls['kcal-min'].value
-    let kcalMaxVal = $searchControls['kcal-max'].value
-
-    if (kcalMinVal && !kcalMaxVal) {
-      params.append('calories', `${kcalMinVal}+`)
-    } else if (kcalMinVal && kcalMaxVal) {
-      if (+kcalMaxVal <= +kcalMinVal) {
-        kcalMaxVal = +kcalMinVal + 100
-        $searchControls['kcal-max'].value = kcalMaxVal
-      }
-      params.append('calories', `${kcalMinVal}-${kcalMaxVal}`)
-    } else if (!kcalMinVal && kcalMaxVal) {
-      params.append('calories', `${kcalMaxVal}`)
+  if (!fetchedRecipes?.hits?.length) {
+    !$nothingFoundAlert && renderNotFound()
+  } else {
+    if ($nothingFoundAlert) {
+      $nothingFoundAlert.remove()
+      $nothingFoundAlert = undefined
     }
+    render(fetchedRecipes)
+  }
 
-    const requestUrl = `${url}${params}`
-    const fetchedRecipes = await fetchData(requestUrl)
-
-    if (!fetchedRecipes?.hits?.length) {
-      !$nothingFoundAlert && renderNotFound()
-    } else {
-      if ($nothingFoundAlert) {
-        $nothingFoundAlert.remove()
-        $nothingFoundAlert = undefined
-      }
-      render(fetchedRecipes)
-    }
-
-    sessionStorage.setItem('foundRecipes', JSON.stringify(fetchedRecipes))
-  })
-})
+  sessionStorage.setItem(CONFIG.foundRecipesKey, JSON.stringify(fetchedRecipes))
+}
 
 async function fetchData(url) {
   const $recipesContainer = $main.querySelector('#found-recipes')
@@ -103,10 +112,12 @@ async function fetchData(url) {
 }
 
 function render(fetchedRecipes) {
+  currentFoundRecipes = []
+
   let template = ''
   const { hits: recipes = [] } = fetchedRecipes
 
-  const favouriteList = JSON.parse(localStorage.getItem('favouriteRecipes'))
+  const favouriteList = JSON.parse(localStorage.getItem(CONFIG.favouriteRecipesKey))
 
   recipes.forEach((item, ind) => {
     const {recipe: {
@@ -204,7 +215,7 @@ function addCardClickListener() {
 }
 
 function toggleFavouriteRecipe(index) {
-  const favouriteList = JSON.parse(localStorage.getItem('favouriteRecipes'))
+  const favouriteList = JSON.parse(localStorage.getItem(CONFIG.favouriteRecipesKey))
 
   if (!favouriteList || !favouriteList.length) {
     localStorage.setItem(
