@@ -215,26 +215,25 @@ function addCardClickListener() {
 }
 
 function toggleFavouriteRecipe(index) {
-  const favouriteList = JSON.parse(localStorage.getItem(CONFIG.favouriteRecipesKey))
+  let favouriteList = []
 
-  if (!favouriteList || !favouriteList.length) {
-    localStorage.setItem(
-      'favouriteRecipes',
-      JSON.stringify([currentFoundRecipes[index]])
-    )
-  } else {
-    const recipeIndexInFavouriteList =
-      favouriteList.findIndex(item => item.label === currentFoundRecipes[index].label)
-    const isRecipeInFavouriteList = recipeIndexInFavouriteList > -1
-
-    if (isRecipeInFavouriteList) {
-      favouriteList.splice(recipeIndexInFavouriteList, 1)
-      localStorage.setItem('favouriteRecipes', JSON.stringify(favouriteList))
-    } else {
-      favouriteList.push(currentFoundRecipes[index])
-      localStorage.setItem('favouriteRecipes', JSON.stringify(favouriteList))
-    }
+  try {
+    favouriteList = JSON.parse(localStorage.getItem(CONFIG.favouriteRecipesKey)) || []
+  } catch (e) {
+    console.warn('Invalid favouriteRecipes format in localStorage.')
+    favouriteList = []
   }
+
+  const selectedRecipe = currentFoundRecipes[index]
+  const recipeIndex = favouriteList.findIndex(item => item.label === selectedRecipe.label)
+
+  if (recipeIndex > -1) {
+    favouriteList.splice(recipeIndex, 1)
+  } else {
+    favouriteList.push(selectedRecipe)
+  }
+
+  localStorage.setItem(CONFIG.favouriteRecipesKey, JSON.stringify(favouriteList))
 }
 
 function renderNotFound() {
