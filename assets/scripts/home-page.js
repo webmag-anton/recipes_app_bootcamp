@@ -11,6 +11,7 @@ let $main = undefined
 let $recipes = undefined
 let currentFoundRecipes = []
 let $nothingFoundAlert = undefined
+let nextRecipesPageURL = null
 
 document.addEventListener('DOMContentLoaded', () => {
   $searchFilter = document.getElementById('search-filter')
@@ -111,12 +112,16 @@ async function fetchData(url) {
   }
 }
 
-function render(fetchedRecipes) {
-  currentFoundRecipes = []
+function render(fetchedRecipes, append = false) {
+  const { hits: recipes = [], _links = {} } = fetchedRecipes
+  nextRecipesPageURL = _links?.next?.href || null
+
+  if (!append) {
+    currentFoundRecipes = []
+    document.getElementById('found-recipes').innerHTML = ''
+  }
 
   let template = ''
-  const { hits: recipes = [] } = fetchedRecipes
-
   const favouriteList = JSON.parse(localStorage.getItem(CONFIG.favouriteRecipesKey))
 
   recipes.forEach((item, ind) => {
@@ -190,9 +195,34 @@ function render(fetchedRecipes) {
       </div>
     `
   })
-  document.getElementById('found-recipes').innerHTML = template
+  $recipes.insertAdjacentHTML('beforeend', template)
 
   addCardClickListener()
+  renderShowMoreButton()
+}
+
+function renderShowMoreButton() {
+  const existingBtn = document.getElementById('show-more-btn')
+  if (existingBtn) existingBtn.remove()
+
+  if (nextRecipesPageURL) {
+    const btnTemplate = `
+      <div class="text-center my-4">
+        <button id="show-more-btn" class="btn btn-primary">Show more</button>
+      </div>
+    `
+    $main.insertAdjacentHTML('beforeend', btnTemplate)
+    document.getElementById('show-more-btn')
+      .addEventListener('click', async () => {
+        const fetchedNextRecipes = await fetchData(nextRecipesPageURL)
+        if (fetchedNextRecipes?.hits?.length) {
+          render(fetchedNextRecipes, true)
+        } else {
+          const btn = document.getElementById('show-more-btn')
+          if (btn) btn.remove()
+        }
+      })
+  }
 }
 
 function addCardClickListener() {
@@ -237,6 +267,9 @@ function toggleFavouriteRecipe(index) {
 }
 
 function renderNotFound() {
+  const existingBtn = document.getElementById('show-more-btn')
+  if (existingBtn) existingBtn.remove()
+
   $main.insertAdjacentHTML('beforeend', `
     <div class='alert alert-warning nothing-found-alert' role='alert'>
       No recipes found =( <br>
