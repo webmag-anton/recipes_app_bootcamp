@@ -186,6 +186,14 @@ body {
   font-size: 14px;
 }
 
+#show-more-btn {
+  background: #7c3ee5;
+}
+
+#show-more-btn:hover {
+  background: #9554ff;
+}
+
 .favourite-item.animated {
   animation: disappear .65s ease-out;
 }
