@@ -1,4 +1,10 @@
+let $creationalForm = undefined
 let $favouriteRecipes = undefined
+
+const CONFIG = {
+  ownRecipesKey: 'ownRecipes'
+}
+
 const emptyFavouriteListTemplate =
   '<p>list of <i class="fa-solid fa-star"></i> recipes is empty :(</p>'
 
@@ -11,6 +17,9 @@ document.addEventListener('DOMContentLoaded', () => {
   } else {
     render($favouriteRecipes, favouriteList)
   }
+
+  $creationalForm = document.getElementById('create-recipe-form')
+  $creationalForm.addEventListener('submit', createSubmitHandler)
 })
 
 function render($container, favouriteList) {
@@ -110,4 +119,52 @@ function addDeletionListener() {
       }, 500)
     })
   })
+}
+
+function createSubmitHandler(event) {
+  event.preventDefault()
+
+  let existingOwnRecipes = localStorage.getItem(CONFIG.ownRecipesKey)
+
+  if (!existingOwnRecipes) {
+    existingOwnRecipes = []
+  } else {
+    existingOwnRecipes = JSON.parse(existingOwnRecipes)
+  }
+
+  const formData = new FormData($creationalForm)
+
+  const label = formData.get('recipe-name')?.trim()
+  const ingredients = formData.get('ingredients')?.trim()
+  const instructions = formData.get('instructions')?.trim()
+  const time = formData.get('create-recipe-time')
+  const weight = formData.get('create-recipe-weight')
+
+  const diets = []
+  $creationalForm.querySelectorAll('#create-recipe-diets input[type="checkbox"]:checked')
+    .forEach(input => diets.push(input.name))
+
+  const allergies = []
+  $creationalForm.querySelectorAll('#create-recipe-allergies input[type="checkbox"]:checked')
+    .forEach(input => allergies.push(input.name))
+
+  const recipe = {
+    label,
+    ingredients,
+    instructions,
+    time,
+    weight,
+    diets,
+    allergies,
+    creationDate: new Date().toLocaleDateString()
+  }
+
+  existingOwnRecipes.push(recipe)
+  localStorage.setItem(CONFIG.ownRecipesKey, JSON.stringify(existingOwnRecipes))
+
+  $modal = document.getElementById('create-recipe')
+  const modal = bootstrap.Modal.getInstance($modal)
+  modal.hide()
+
+  this.reset()
 }

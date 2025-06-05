@@ -28,7 +28,8 @@
       </button>
       <div class='collapse navbar-collapse text-center' id='navbarNavAltMarkup'>
         <div class='navbar-nav ml-auto'>
-          <a class='nav-link active' href='index.html'>Home</a>
+          <a class='nav-link active' href='index.html'>Home <i class='fa-solid fa-search'></i></a>
+          <a class='nav-link' href='own-recipes.html'>My Recipes <i class='fa-solid fa-book'></i></a>
           <a class='nav-link' href='favourites.html'>Favourites <i class='fa-solid fa-star'></i></a>
         </div>
         <button id='create' type='button' class='btn btn-success' data-bs-toggle='modal'
@@ -41,9 +42,9 @@
   <div class="modal modal-lg" tabindex="-1" id="create-recipe">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
-        <form>
+        <form id="create-recipe-form">
           <div class="modal-header">
-            <h5 class="modal-title">Create your recipe:</h5>
+            <h4 class="modal-title text-success text-center w-100">New Recipe:</h4>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
@@ -52,129 +53,131 @@
                 <div class="row">
                   <div class="col">
                     <div class="mb-3">
-                      <label for="recipe-name" class="form-label">Name</label>
-                      <input type="text" class="form-control" id="recipe-name" placeholder="Recipe name" required>
+                      <label for="recipe-name" class="form-label fs-5">Name</label>
+                      <input type="text" class="form-control" id="recipe-name" name='recipe-name' placeholder="Recipe name" required>
                     </div>
                     <div class="mb-3">
-                      <label for="ingredients" class="form-label">Ingredients:</label>
-                      <textarea class="form-control" id="ingredients" rows="7" required></textarea>
+                      <label for="ingredients" class="form-label fs-5">Ingredients:</label>
+                      <textarea class="form-control" id="ingredients" name='ingredients' rows="9" required style="resize: none;"></textarea>
                     </div>
                     <div class="mb-3">
-                      <label for="instructions" class="form-label">Instructions:</label>
-                      <textarea class="form-control" id="instructions" rows="10" required></textarea>
+                      <label for="instructions" class="form-label fs-5">Instructions:</label>
+                      <textarea class="form-control" id="instructions" name='instructions' rows="9" required style="resize: none;"></textarea>
                     </div>
                   </div>
                 </div>
               </div>
               <div class="col-12 col-sm-4">
                 <div class="row">
-                  <div class="col-6 col-sm-12">
+                  <div class="col-6 col-sm-12" id='create-recipe-diets'>
                     <fieldset class='mb-4'>
-                      <legend>Allergies:</legend>
+                      <legend class="fs-5">Diets:</legend>
                       <div class='form-check form-switch'>
-                        <input id='gluten-free-modal' name='gluten-free-modal' class='form-check-input' type='checkbox'
-                          role='switch' data-search-type='health'>
-                        <label class='form-check-label' for='gluten-free-modal'>gluten-free</label>
-                      </div>
-                      <div class='form-check form-switch'>
-                        <input id='fish-free-modal' name='fish-free-modal' class='form-check-input' type='checkbox' role='switch'
-                          data-search-type='health'>
-                        <label class='form-check-label' for='fish-free-modal'>fish-free</label>
-                      </div>
-                      <div class='form-check form-switch'>
-                        <input id='egg-free-modal' name='egg-free-modal' class='form-check-input' type='checkbox' role='switch'
-                          data-search-type='health'>
-                        <label class='form-check-label' for='egg-free-modal'>egg-free</label>
-                      </div>
-                      <div class='form-check form-switch'>
-                        <input id='celery-free-modal' name='celery-free-modal' class='form-check-input' type='checkbox'
-                          role='switch' data-search-type='health'>
-                        <label class='form-check-label' for='celery-free-modal'>celery-free</label>
-                      </div>
-                      <div class='form-check form-switch'>
-                        <input id='crustacean-free-modal' name='crustacean-free-modal' class='form-check-input' type='checkbox'
-                          role='switch' data-search-type='health'>
-                        <label class='form-check-label' for='crustacean-free-modal'>crustacean-free</label>
-                      </div>
-                      <div class='form-check form-switch'>
-                        <input id='dairy-free-modal' name='dairy-free-modal' class='form-check-input' type='checkbox' role='switch'
-                          data-search-type='health'>
-                        <label class='form-check-label' for='dairy-free-modal'>dairy-free</label>
-                      </div>
-                      <div class='form-check form-switch'>
-                        <input id='peanut-free-modal' name='peanut-free-modal' class='form-check-input' type='checkbox'
-                          role='switch' data-search-type='health'>
-                        <label class='form-check-label' for='peanut-free-modal'>peanut-free</label>
-                      </div>
-                    </fieldset>
-                  </div>
-
-                  <div class="col-6 col-sm-12">
-                    <fieldset class='mb-4'>
-                      <legend>Diets:</legend>
-                      <div class='form-check form-switch'>
-                        <input id='low-fat-modal' name='low-fat-modal' class='form-check-input' type='checkbox' role='switch'
+                        <input id='low-fat-modal' name='low-fat' class='form-check-input' type='checkbox' role='switch'
                           data-search-type='diet'>
                         <label class='form-check-label' for='low-fat-modal'>low-fat</label>
                       </div>
                       <div class='form-check form-switch'>
-                        <input id='keto-friendly-modal' name='keto-friendly-modal' class='form-check-input' type='checkbox'
+                        <input id='keto-friendly-modal' name='keto-friendly' class='form-check-input' type='checkbox'
                           role='switch' data-search-type='health'>
                         <label class='form-check-label' for='keto-friendly-modal'>keto-friendly</label>
                       </div>
                       <div class='form-check form-switch'>
-                        <input id='alcohol-free-modal' name='alcohol-free-modal' class='form-check-input' type='checkbox'
+                        <input id='alcohol-free-modal' name='alcohol-free' class='form-check-input' type='checkbox'
                           role='switch' data-search-type='health'>
                         <label class='form-check-label' for='alcohol-free-modal'>alcohol-free</label>
                       </div>
                       <div class='form-check form-switch'>
-                        <input id='balanced-modal' name='balanced-modal' class='form-check-input' type='checkbox' role='switch'
+                        <input id='balanced-modal' name='balanced' class='form-check-input' type='checkbox' role='switch'
                           data-search-type='diet'>
                         <label class='form-check-label' for='balanced-modal'>balanced</label>
                       </div>
                       <div class='form-check form-switch'>
-                        <input id='high-fiber-modal' name='high-fiber-modal' class='form-check-input' type='checkbox' role='switch'
+                        <input id='high-fiber-modal' name='high-fiber' class='form-check-input' type='checkbox' role='switch'
                           data-search-type='diet'>
                         <label class='form-check-label' for='high-fiber-modal'>high-fiber</label>
                       </div>
                       <div class='form-check form-switch'>
-                        <input id='low-sugar-modal' name='low-sugar-modal' class='form-check-input' type='checkbox' role='switch'
+                        <input id='low-sugar-modal' name='low-sugar' class='form-check-input' type='checkbox' role='switch'
                           data-search-type='health'>
                         <label class='form-check-label' for='low-sugar-modal'>low-sugar</label>
                       </div>
                       <div class='form-check form-switch'>
-                        <input id='red-meat-free-modal' name='red-meat-free-modal' class='form-check-input' type='checkbox'
+                        <input id='red-meat-free-modal' name='red-meat-free' class='form-check-input' type='checkbox'
                           role='switch' data-search-type='health'>
                         <label class='form-check-label' for='red-meat-free-modal'>red-meat-free</label>
                       </div>
                       <div class='form-check form-switch'>
-                        <input id='vegan-modal' name='vegan-modal' class='form-check-input' type='checkbox' role='switch'
+                        <input id='vegan-modal' name='vegan' class='form-check-input' type='checkbox' role='switch'
                           data-search-type='health'>
                         <label class='form-check-label' for='vegan-modal'>vegan</label>
                       </div>
                     </fieldset>
                   </div>
-                  <div class="col-12">
-                    <fieldset>
-                      <legend>Kcal per serving:</legend>
-                      <div class="row">
-                        <div class="col mb-sm-3 d-flex justify-content-around">
-                          <label for='calories-min-modal'>min</label>
-                          <input class="ml-auto" name='kcal-min-modal' type='number' min='0' max='10000' id='calories-min-modal'>
-                        </div>
-                        <div class="col mb-sm-3 d-flex justify-content-around">
-                          <label for='calories-max-modal'>max</label>
-                          <input class="ml-auto" name='kcal-max-modal' type='number' min='0' max='10000' id='calories-max-modal'>
-                        </div>
+
+                  <div class="col-6 col-sm-12" id='create-recipe-allergies'>
+                    <fieldset class='mb-4'>
+                      <legend class="fs-5">Allergies:</legend>
+                      <div class='form-check form-switch'>
+                        <input id='gluten-free-modal' name='gluten-free' class='form-check-input' type='checkbox'
+                               role='switch' data-search-type='health'>
+                        <label class='form-check-label' for='gluten-free-modal'>gluten-free</label>
+                      </div>
+                      <div class='form-check form-switch'>
+                        <input id='fish-free-modal' name='fish-free' class='form-check-input' type='checkbox' role='switch'
+                               data-search-type='health'>
+                        <label class='form-check-label' for='fish-free-modal'>fish-free</label>
+                      </div>
+                      <div class='form-check form-switch'>
+                        <input id='egg-free-modal' name='egg-free' class='form-check-input' type='checkbox' role='switch'
+                               data-search-type='health'>
+                        <label class='form-check-label' for='egg-free-modal'>egg-free</label>
+                      </div>
+                      <div class='form-check form-switch'>
+                        <input id='celery-free-modal' name='celery-free' class='form-check-input' type='checkbox'
+                               role='switch' data-search-type='health'>
+                        <label class='form-check-label' for='celery-free-modal'>celery-free</label>
+                      </div>
+                      <div class='form-check form-switch'>
+                        <input id='crustacean-free-modal' name='crustacean-free' class='form-check-input' type='checkbox'
+                               role='switch' data-search-type='health'>
+                        <label class='form-check-label' for='crustacean-free-modal'>crustacean-free</label>
+                      </div>
+                      <div class='form-check form-switch'>
+                        <input id='dairy-free-modal' name='dairy-free' class='form-check-input' type='checkbox' role='switch'
+                               data-search-type='health'>
+                        <label class='form-check-label' for='dairy-free-modal'>dairy-free</label>
+                      </div>
+                      <div class='form-check form-switch'>
+                        <input id='peanut-free-modal' name='peanut-free' class='form-check-input' type='checkbox'
+                               role='switch' data-search-type='health'>
+                        <label class='form-check-label' for='peanut-free-modal'>peanut-free</label>
                       </div>
                     </fieldset>
+                  </div>
+
+                  <div class="col-12">
+                    <div class="row">
+                      <div class="col mb-2 align-items-center">
+                        <label for='create-recipe-time' class='fs-5'>Cooking time, min:</label>
+                        <br>
+                        <input name='create-recipe-time' type='number' min='1' max='5000' id='create-recipe-time'>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col align-items-center">
+                        <label for='create-recipe-weight' class='fs-5'>Total weight, g:</label>
+                        <br>
+                        <input name='create-recipe-weight' type='number' min='50' max='100000' id='create-recipe-weight'>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
           <div class="modal-footer justify-content-center">
-            <button type="button" class="btn btn-success">Create</button>
+            <button type="submit" class="btn btn-success">Create</button>
           </div>
         </form>
       </div>

@@ -36,6 +36,10 @@ body {
   background: url(../images/background-fav.webp) no-repeat center right/cover;
 }
 
+#header.own-recipes {
+  background: url(../images/own_recipes.webp) no-repeat center right/cover;
+}
+
 .navbar-nav .nav-link {
   color: #eee;
   margin-right: 15px;
@@ -62,6 +66,7 @@ body {
 
 #create-recipe .modal-content {
   animation: fade_in_1 1s ease-out;
+  background: #efefe1;
 }
 
 @keyframes fade_in_1 {
@@ -151,6 +156,10 @@ body {
   background-size: contain;
 }
 
+.own-item.card::before {
+  display: none;
+}
+
 .card-img-top {
   position: absolute;
   z-index: 1;
@@ -160,8 +169,17 @@ body {
   padding-top: calc(100% + 16px);
 }
 
+.own-item .card-body {
+  padding-top: 20px;
+  background: #efefe1;
+}
+
 .found-item li {
   padding-left: 0;
+}
+
+.own-item .list-group-item {
+  padding-left: 8px;
 }
 
 .found-item .badge {
@@ -169,7 +187,8 @@ body {
 }
 
 .btn-favourite,
-.favourite-delete-btn {
+.favourite-delete-btn,
+.own-delete-btn {
   display: block;
   margin-left: auto;
 }
@@ -194,8 +213,17 @@ body {
   background: #9554ff;
 }
 
-.favourite-item.animated {
+.favourite-item.animated,
+.own-item.animated {
   animation: disappear .65s ease-out;
+}
+
+
+#calories-min-modal {
+  margin-left: 14px;
+}
+#calories-max-modal {
+  margin-left: 10px;
 }
 
 .footer {

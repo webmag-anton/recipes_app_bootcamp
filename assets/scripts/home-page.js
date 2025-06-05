@@ -3,12 +3,14 @@ const CONFIG = {
   appID: '3084784d',
   appKey: 'dc83d53eaf6e9bcde3a249be9b9d6ce7',
   foundRecipesKey: 'foundRecipes',
-  favouriteRecipesKey: 'favouriteRecipes'
+  favouriteRecipesKey: 'favouriteRecipes',
+  ownRecipesKey: 'ownRecipes'
 }
 
 let $searchFilter = undefined
 let $main = undefined
 let $recipes = undefined
+let $creationalForm = undefined
 let currentFoundRecipes = []
 let $nothingFoundAlert = undefined
 let nextRecipesPageURL = null
@@ -17,10 +19,11 @@ document.addEventListener('DOMContentLoaded', () => {
   $searchFilter = document.getElementById('search-filter')
   $main = document.getElementById('main')
   $recipes = $main.querySelector('#found-recipes')
+  $creationalForm = document.getElementById('create-recipe-form')
 
   renderPreviousSearchResults()
-
   $searchFilter.addEventListener('submit', searchSubmitHandler)
+  $creationalForm.addEventListener('submit', createSubmitHandler)
 })
 
 function renderPreviousSearchResults() {
@@ -279,4 +282,52 @@ function renderNotFound() {
   currentFoundRecipes = []
   $recipes.innerHTML = ''
   $nothingFoundAlert = $main.querySelector('.nothing-found-alert')
+}
+
+function createSubmitHandler(event) {
+  event.preventDefault()
+
+  let existingOwnRecipes = localStorage.getItem(CONFIG.ownRecipesKey)
+
+  if (!existingOwnRecipes) {
+    existingOwnRecipes = []
+  } else {
+    existingOwnRecipes = JSON.parse(existingOwnRecipes)
+  }
+
+  const formData = new FormData($creationalForm)
+
+  const label = formData.get('recipe-name')?.trim()
+  const ingredients = formData.get('ingredients')?.trim()
+  const instructions = formData.get('instructions')?.trim()
+  const time = formData.get('create-recipe-time')
+  const weight = formData.get('create-recipe-weight')
+
+  const diets = []
+  $creationalForm.querySelectorAll('#create-recipe-diets input[type="checkbox"]:checked')
+    .forEach(input => diets.push(input.name))
+
+  const allergies = []
+  $creationalForm.querySelectorAll('#create-recipe-allergies input[type="checkbox"]:checked')
+    .forEach(input => allergies.push(input.name))
+
+  const recipe = {
+    label,
+    ingredients,
+    instructions,
+    time,
+    weight,
+    diets,
+    allergies,
+    creationDate: new Date().toLocaleDateString()
+  }
+
+  existingOwnRecipes.push(recipe)
+  localStorage.setItem(CONFIG.ownRecipesKey, JSON.stringify(existingOwnRecipes))
+
+  $modal = document.getElementById('create-recipe')
+  const modal = bootstrap.Modal.getInstance($modal)
+  modal.hide()
+
+  this.reset()
 }
