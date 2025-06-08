@@ -230,6 +230,22 @@ body {
   padding-top: 20px !important;
 }
 
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  border: none;
+}
+
+.toast, .toast-header {
+  background: #1e9339;
+  color: #fff;
+}
+
+.btn-close {
+  background-color: #fff;
+}
+
 @keyframes disappear {
   0% {
     transform: translateY(70px);
@@ -244,7 +260,6 @@ body {
     opacity: 0;
   }
 }
-
 
 @media screen and (max-width: 940px) {
   #main-wrapper {

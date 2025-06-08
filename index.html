@@ -11,7 +11,7 @@
   <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css'
     integrity='sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=='
     crossorigin='anonymous' referrerpolicy='no-referrer' />
-    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+    <link rel='icon' type='image/png' href='assets/images/favicon.png'>
   <link rel='stylesheet' href='assets/styles/styles.css'>
   <title>Recipes Searcher</title>
 </head>
@@ -39,39 +39,39 @@
   </header>
 
   <!--Modal-->
-  <div class="modal modal-lg" tabindex="-1" id="create-recipe">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <form id="create-recipe-form">
-          <div class="modal-header">
-            <h4 class="modal-title text-success text-center w-100">New Recipe:</h4>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  <div class='modal modal-lg' tabindex='-1' id='create-recipe'>
+    <div class='modal-dialog modal-dialog-centered'>
+      <div class='modal-content'>
+        <form id='create-recipe-form'>
+          <div class='modal-header'>
+            <h4 class='modal-title text-success text-center w-100'>New Recipe:</h4>
+            <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
           </div>
-          <div class="modal-body">
-            <div class="row">
-              <div class="col-12 col-sm-8">
-                <div class="row">
-                  <div class="col">
-                    <div class="mb-3">
-                      <label for="recipe-name" class="form-label fs-5">Name</label>
-                      <input type="text" class="form-control" id="recipe-name" name='recipe-name' placeholder="Recipe name" required>
+          <div class='modal-body'>
+            <div class='row'>
+              <div class='col-12 col-sm-8'>
+                <div class='row'>
+                  <div class='col'>
+                    <div class='mb-3'>
+                      <label for='recipe-name' class='form-label fs-5'>Name</label>
+                      <input type='text' class='form-control' id='recipe-name' name='recipe-name' placeholder='Recipe name' required>
                     </div>
-                    <div class="mb-3">
-                      <label for="ingredients" class="form-label fs-5">Ingredients:</label>
-                      <textarea class="form-control" id="ingredients" name='ingredients' rows="9" required style="resize: none;"></textarea>
+                    <div class='mb-3'>
+                      <label for='ingredients' class='form-label fs-5'>Ingredients:</label>
+                      <textarea class='form-control' id='ingredients' name='ingredients' rows='9' required style='resize: none;'></textarea>
                     </div>
-                    <div class="mb-3">
-                      <label for="instructions" class="form-label fs-5">Instructions:</label>
-                      <textarea class="form-control" id="instructions" name='instructions' rows="9" required style="resize: none;"></textarea>
+                    <div class='mb-3'>
+                      <label for='instructions' class='form-label fs-5'>Instructions:</label>
+                      <textarea class='form-control' id='instructions' name='instructions' rows='9' required style='resize: none;'></textarea>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="col-12 col-sm-4">
-                <div class="row">
-                  <div class="col-6 col-sm-12" id='create-recipe-diets'>
+              <div class='col-12 col-sm-4'>
+                <div class='row'>
+                  <div class='col-6 col-sm-12' id='create-recipe-diets'>
                     <fieldset class='mb-4'>
-                      <legend class="fs-5">Diets:</legend>
+                      <legend class='fs-5'>Diets:</legend>
                       <div class='form-check form-switch'>
                         <input id='low-fat-modal' name='low-fat' class='form-check-input' type='checkbox' role='switch'
                           data-search-type='diet'>
@@ -115,9 +115,9 @@
                     </fieldset>
                   </div>
 
-                  <div class="col-6 col-sm-12" id='create-recipe-allergies'>
+                  <div class='col-6 col-sm-12' id='create-recipe-allergies'>
                     <fieldset class='mb-4'>
-                      <legend class="fs-5">Allergies:</legend>
+                      <legend class='fs-5'>Allergies:</legend>
                       <div class='form-check form-switch'>
                         <input id='gluten-free-modal' name='gluten-free' class='form-check-input' type='checkbox'
                                role='switch' data-search-type='health'>
@@ -156,16 +156,16 @@
                     </fieldset>
                   </div>
 
-                  <div class="col-12">
-                    <div class="row">
-                      <div class="col mb-2 align-items-center">
+                  <div class='col-12'>
+                    <div class='row'>
+                      <div class='col mb-2 align-items-center'>
                         <label for='create-recipe-time' class='fs-5'>Cooking time, min:</label>
                         <br>
                         <input name='create-recipe-time' type='number' min='1' max='5000' id='create-recipe-time'>
                       </div>
                     </div>
-                    <div class="row">
-                      <div class="col align-items-center">
+                    <div class='row'>
+                      <div class='col align-items-center'>
                         <label for='create-recipe-weight' class='fs-5'>Total weight, g:</label>
                         <br>
                         <input name='create-recipe-weight' type='number' min='50' max='100000' id='create-recipe-weight'>
@@ -176,8 +176,8 @@
               </div>
             </div>
           </div>
-          <div class="modal-footer justify-content-center">
-            <button type="submit" class="btn btn-success">Create</button>
+          <div class='modal-footer justify-content-center'>
+            <button type='submit' class='btn btn-success'>Create</button>
           </div>
         </form>
       </div>
@@ -284,28 +284,38 @@
     </main>
   </div>
 
-  <footer class="footer bg-dark text-white text-center py-1">
-    <div class="container">
-      <ul class="list-inline">
-        <li class="list-inline-item mx-3">
-          <a href="https://www.facebook.com" target="_blank" class="text-white">
-            <i class="fab fa-facebook-f fa-2x"></i>
+  <footer class='footer bg-dark text-white text-center py-1'>
+    <div class='container'>
+      <ul class='list-inline'>
+        <li class='list-inline-item mx-3'>
+          <a href='https://www.facebook.com' target='_blank' class='text-white'>
+            <i class='fab fa-facebook-f fa-2x'></i>
           </a>
         </li>
-        <li class="list-inline-item mx-3">
-          <a href="https://www.instagram.com" target="_blank" class="text-white">
-            <i class="fab fa-instagram fa-2x"></i>
+        <li class='list-inline-item mx-3'>
+          <a href='https://www.instagram.com' target='_blank' class='text-white'>
+            <i class='fab fa-instagram fa-2x'></i>
           </a>
         </li>
-        <li class="list-inline-item mx-3">
-          <a href="https://www.twitter.com" target="_blank" class="text-white">
-            <i class="fab fa-twitter fa-2x"></i>
+        <li class='list-inline-item mx-3'>
+          <a href='https://www.twitter.com' target='_blank' class='text-white'>
+            <i class='fab fa-twitter fa-2x'></i>
           </a>
         </li>
       </ul>
-      <p class="mt-3">&copy; 2024 Anton, Oleksii & Bryan. All rights reserved.</p>
+      <p class='mt-3'>All rights reserved.</p>
     </div>
-  </footer>  
+  </footer>
+
+  <div id='toast' class='toast' role='alert' aria-live='assertive' aria-atomic='true'>
+    <div class='toast-header'>
+      <strong class='me-auto'>Congratulations!</strong>
+      <button type='button' class='btn-close' data-bs-dismiss='toast' aria-label='Close'></button>
+    </div>
+    <div class='toast-body'>
+      The new recipe has been created.
+    </div>
+  </div>
 
   <script src='https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js'
     integrity='sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r'
@@ -313,7 +323,7 @@
   <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js'
     integrity='sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy'
     crossorigin='anonymous'></script>
+  <script src='assets/scripts/config.js'></script>
   <script src='assets/scripts/home-page.js'></script>
 </body>
-
 </html>

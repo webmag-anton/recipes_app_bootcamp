@@ -1,53 +1,40 @@
-let $creationalForm = undefined
 let $favouriteRecipes = undefined
-
-const CONFIG = {
-  ownRecipesKey: 'ownRecipes'
-}
-
-const emptyFavouriteListTemplate =
-  '<p>list of <i class="fa-solid fa-star"></i> recipes is empty :(</p>'
+let $creationalForm = undefined
 
 document.addEventListener('DOMContentLoaded', () => {
   $favouriteRecipes = document.getElementById('favourite-recipes')
-  const favouriteList = JSON.parse(localStorage.getItem('favouriteRecipes'))
-
-  if (!favouriteList || !favouriteList.length) {
-    render($favouriteRecipes, undefined)
-  } else {
-    render($favouriteRecipes, favouriteList)
-  }
-
   $creationalForm = document.getElementById('create-recipe-form')
-  $creationalForm.addEventListener('submit', createSubmitHandler)
+
+  App.renderFavouriteRecipes()
+  $creationalForm.addEventListener('submit', Handlers.createSubmitHandler)
 })
 
-function render($container, favouriteList) {
-  if (favouriteList === undefined) {
-    $container.innerHTML = emptyFavouriteListTemplate
-  } else {
-    const template = getRecipesTemplate(favouriteList)
-    $container.innerHTML = template
-    addDeletionListener()
+const App = {
+  renderFavouriteRecipes() {
+    const favouriteList = Storage.getFavouriteRecipes()
+    if (!favouriteList || !favouriteList.length) {
+      Render.noFavourites($favouriteRecipes)
+    } else {
+      Render.favouriteRecipes($favouriteRecipes, favouriteList)
+    }
   }
 }
 
-function getRecipesTemplate(favouriteList) {
-  let template = ''
-  favouriteList.forEach((item, ind) => {
-    const {
-      label,
-      imageUrl,
-      cuisineType,
-      dishType,
-      cautions,
-      ingredientLines,
-      totalTime,
-      totalWeight,
-      url
-    } = item
+const Render = {
+  noFavourites($container) {
+    $container.innerHTML = `
+      <p>list of <i class="fa-solid fa-star"></i> recipes is empty :(</p>
+    `
+  },
 
-    template += `
+  favouriteRecipes($container, favouriteList) {
+    const template = favouriteList.map((item, ind) => {
+      const {
+        label, imageUrl, cuisineType, dishType,
+        cautions, ingredientLines, totalTime, totalWeight, url
+      } = item
+
+      return `
         <div class='col'>
           <div class='card found-item favourite-item' data-label='${label}'>
             <img src='${imageUrl}' class='card-img-top' alt='${label}'>
@@ -58,8 +45,8 @@ function getRecipesTemplate(favouriteList) {
               </button>
               <ul class='list-group list-group-flush'>
                 <li class='list-group-item'>
-                  ${dishType.map(dish => `<span class='badge text-bg-dark d-inline-block mb-1'>${dish}</span>`).join('')}
-                  ${cuisineType.map(cuisine => `<span class='badge text-bg-success d-inline-block mb-1'>${cuisine}</span>`).join('')}
+                  ${dishType.map(d => `<span class='badge text-bg-dark d-inline-block mb-1'>${d}</span>`).join('')}
+                  ${cuisineType.map(c => `<span class='badge text-bg-success d-inline-block mb-1'>${c}</span>`).join('')}
                 </li>
                 <li class='list-group-item'>
                   <span class='badge text-bg-secondary'>cooking time: ${totalTime} min</span>
@@ -68,10 +55,9 @@ function getRecipesTemplate(favouriteList) {
                   <span class='badge text-bg-secondary'>total weight: ${Math.round(totalWeight)} g</span>
                 </li>
                 <li class='list-group-item'>
-                  ${cautions.map(caution => `<span class='badge text-bg-danger d-inline-block'>${caution}</span>`).join('')}
+                  ${cautions.map(c => `<span class='badge text-bg-danger d-inline-block'>${c}</span>`).join('')}
                 </li>
               </ul>
-              
               <div class='accordion mt-2 mb-2' id='accordion_${ind}'>
                 <div class='accordion-item'>
                   <h2 class='accordion-header'>
@@ -81,90 +67,100 @@ function getRecipesTemplate(favouriteList) {
                   </h2>
                   <div id='collapse-${ind}' class='accordion-collapse collapse' data-bs-parent='#accordion_${ind}'>
                     <div class='accordion-body'>
-                      ${ingredientLines.map(ingredient => `<p class='mb-1'>- ${ingredient}</p>`).join('')}
+                      ${ingredientLines.map(ing => `<p class='mb-1'>- ${ing}</p>`).join('')}
                     </div>
                   </div>
                 </div>
               </div>
-              
               <a href='${url}' class='btn btn-dark recipe-link' target='_blank'>recipe <i class="fa-solid fa-link"></i></a>
             </div>
           </div>
         </div>
       `
-  })
-  return template
+    }).join('')
+
+    $container.innerHTML = template
+    UI.addFavouriteDeleteListeners()
+  }
 }
 
-function addDeletionListener() {
-  const $favouriteItems = $favouriteRecipes.getElementsByClassName('favourite-item')
+const Handlers = {
+  createSubmitHandler(event) {
+    event.preventDefault()
 
-  Array.from($favouriteItems).forEach(item => {
-    const $deleteButton = item.getElementsByClassName('favourite-delete-btn')[0]
+    let existingOwnRecipes = localStorage.getItem(CONFIG.ownRecipesKey)
+    existingOwnRecipes = existingOwnRecipes ? JSON.parse(existingOwnRecipes) : []
 
-    $deleteButton.addEventListener('click', function() {
-      const recipeLabel = this.closest('.favourite-item').dataset.label
+    const formData = new FormData($creationalForm)
+    const recipe = {
+      label: formData.get('recipe-name')?.trim(),
+      ingredients: formData.get('ingredients')?.trim(),
+      instructions: formData.get('instructions')?.trim(),
+      time: formData.get('create-recipe-time'),
+      weight: formData.get('create-recipe-weight'),
+      diets: Utils.getCheckedCheckboxValues('#create-recipe-diets'),
+      allergies: Utils.getCheckedCheckboxValues('#create-recipe-allergies'),
+      creationDate: new Date().toLocaleDateString()
+    }
 
-      const favouriteList = JSON.parse(localStorage.getItem('favouriteRecipes'))
-      const filteredFavouriteList = favouriteList.filter(item => item.label !== recipeLabel)
+    existingOwnRecipes.push(recipe)
+    localStorage.setItem(CONFIG.ownRecipesKey, JSON.stringify(existingOwnRecipes))
 
-      localStorage.setItem('favouriteRecipes', JSON.stringify(filteredFavouriteList))
+    const $modal = document.getElementById('create-recipe')
+    const modal = bootstrap.Modal.getInstance($modal)
+    modal.hide()
 
-      item.classList.add('animated')
-      setTimeout(() => {
-        item.parentElement.remove()
-        if (!JSON.parse(localStorage.getItem('favouriteRecipes')).length) {
-          $favouriteRecipes.innerHTML = emptyFavouriteListTemplate
-        }
-      }, 500)
+    $creationalForm.reset()
+    UI.showToast()
+  }
+}
+
+const Storage = {
+  getFavouriteRecipes() {
+    try {
+      return JSON.parse(localStorage.getItem(CONFIG.favouriteRecipesKey)) || []
+    } catch {
+      console.warn('Invalid favourite list format.')
+      return []
+    }
+  },
+
+  removeFavouriteRecipe(label) {
+    const list = Storage.getFavouriteRecipes()
+    const updated = list.filter(item => item.label !== label)
+    localStorage.setItem(CONFIG.favouriteRecipesKey, JSON.stringify(updated))
+    return updated
+  }
+}
+
+const UI = {
+  addFavouriteDeleteListeners() {
+    const $items = $favouriteRecipes.getElementsByClassName('favourite-item')
+
+    Array.from($items).forEach(item => {
+      const $deleteBtn = item.querySelector('.favourite-delete-btn')
+
+      $deleteBtn.addEventListener('click', () => {
+        const label = item.dataset.label
+        const updatedList = Storage.removeFavouriteRecipe(label)
+
+        item.classList.add('animated')
+        setTimeout(() => {
+          item.parentElement.remove()
+          if (!updatedList.length) Render.noFavourites($favouriteRecipes)
+        }, 500)
+      })
     })
-  })
+  },
+
+  showToast() {
+    const toast = bootstrap.Toast.getOrCreateInstance(document.getElementById('toast'))
+    toast.show()
+  }
 }
 
-function createSubmitHandler(event) {
-  event.preventDefault()
-
-  let existingOwnRecipes = localStorage.getItem(CONFIG.ownRecipesKey)
-
-  if (!existingOwnRecipes) {
-    existingOwnRecipes = []
-  } else {
-    existingOwnRecipes = JSON.parse(existingOwnRecipes)
+const Utils = {
+  getCheckedCheckboxValues(containerSelector) {
+    return Array.from(document.querySelectorAll(`${containerSelector} input[type="checkbox"]:checked`)).map(input => input.name)
   }
-
-  const formData = new FormData($creationalForm)
-
-  const label = formData.get('recipe-name')?.trim()
-  const ingredients = formData.get('ingredients')?.trim()
-  const instructions = formData.get('instructions')?.trim()
-  const time = formData.get('create-recipe-time')
-  const weight = formData.get('create-recipe-weight')
-
-  const diets = []
-  $creationalForm.querySelectorAll('#create-recipe-diets input[type="checkbox"]:checked')
-    .forEach(input => diets.push(input.name))
-
-  const allergies = []
-  $creationalForm.querySelectorAll('#create-recipe-allergies input[type="checkbox"]:checked')
-    .forEach(input => allergies.push(input.name))
-
-  const recipe = {
-    label,
-    ingredients,
-    instructions,
-    time,
-    weight,
-    diets,
-    allergies,
-    creationDate: new Date().toLocaleDateString()
-  }
-
-  existingOwnRecipes.push(recipe)
-  localStorage.setItem(CONFIG.ownRecipesKey, JSON.stringify(existingOwnRecipes))
-
-  $modal = document.getElementById('create-recipe')
-  const modal = bootstrap.Modal.getInstance($modal)
-  modal.hide()
-
-  this.reset()
 }
